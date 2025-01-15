@@ -1,0 +1,65 @@
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+    background-color:rgb(255, 0, 0);
+    
+}
+
+
+
+.image-background {
+    height: 70vh;
+    object-fit: fill;
+    filter: blur(3px);
+    z-index: 1;
+    margin: 20px; 
+    position: relative;
+    border-radius: 20px; 
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transform: translate(5%, -15vh); 
+    
+}
+
+
+
+.welcome {
+    width: 30%;
+    z-index: 2;
+    position: relative;
+    background-color : rgb(206, 206, 206);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    border : rgb(46, 46, 46) 5px solid;
+}
+
+.play-bar {
+    width : 45%;
+    height : 20vh;
+    z-index: 3;
+    position: relative;
+    transform: translate(40vw, -50vh); 
+    display: flex; 
+    align-items: center; 
+    padding-left: 20px; 
+    background-color : rgb(206, 206, 206);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    border : rgb(46, 46, 46) 5px solid;
+}
+
+.play-btn {
+    width: auto; 
+    margin: 0; 
+}
+
+@media screen and (max-width: 768px) { 
+    .welcome {
+        width: 60%; 
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .welcome {
+        width: 80%; 
+    }
+}
