@@ -58,24 +58,30 @@ body {
 }
 
 .square{ 
-    width: 8vh;
-    height: 8vh;
+    width: 10vh;
+    height: 10vh;
 }
 
 .board {
-    border: 5px solid black;
-    width : 65vh;
-    height: 65vh;
+    position: relative;
+    width : 80vh;
+    height: 80vh;
     left : 10vw;
-    top : 40vh;
+    top : 5vh;
 }
 
+.piece {
+    width: 10vh;
+    height: 10vh;
+}
+
+
 .dark-square {
-    background-color: black;
+    background-color: darkolivegreen;
 }
 
 .light-square {
-    background-color: white;
+    background-color: lightgoldenrodyellow;
 }
 
 @media screen and (max-width: 768px) { 
