@@ -142,3 +142,13 @@ body {
         width: 80%; 
     }
 }
+
+.historytable tr:hover td{
+    color: blue;
+    text-shadow: 0 0 10px rgb(50,50,255);
+    background-color: rgb(176, 201, 212);
+}
+
+td.square:hover img{
+    filter: drop-shadow(0 0 10px rgb(223, 194, 98))
+}

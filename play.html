@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="styles.css" />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
 
     <title>CS 4640 Chess</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
-    />
+  >
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css"
-    />
+  >
     <script src="chess.js"></script>
   </head>
   <body>
@@ -47,61 +47,60 @@
           </div>
         </div>
       </nav>
-
       <div class="game">
         <div class="board">
-            <table>
+          <table>
             <tr>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/rook-b.svg" id="brook1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/rook-b.svg" id="brook1" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Rook">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/knight-b.svg" id="bknight1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/knight-b.svg" id="bknight1" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Knight">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/bishop-b.svg" id="bbishop1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/bishop-b.svg" id="bbishop1" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Bishop">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/queen-b.svg" id="bqueen" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/queen-b.svg" id="bqueen" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Queen">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/king-b.svg" id="bking" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/king-b.svg" id="bking" class="piece" draggable="true" ondragstart="drag(event)" alt="Black King">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/bishop-b.svg" id="bbishop2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/bishop-b.svg" id="bbishop2" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Bishop">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/knight-b.svg" id="bknight2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/knight-b.svg" id="bknight2" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Knight">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/rook-b.svg" id="brook2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/rook-b.svg" id="brook2" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Rook">
               </td>
             </tr>
 
             <tr>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-b.svg" id="bpawn1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn1" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-b.svg" id="bpawn2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn2" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-b.svg" id="bpawn3" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn3" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-b.svg" id="bpawn4" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn4" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-b.svg" id="bpawn5" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn5" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-b.svg" id="bpawn6" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn6" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-b.svg" id="bpawn7" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn7" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-b.svg" id="bpawn8" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-b.svg" id="bpawn8" class="piece" draggable="true" ondragstart="drag(event)" alt="Black Pawn">
               </td>
             </tr>
 
@@ -148,55 +147,55 @@
 
             <tr>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-w.svg" id="wpawn1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn1" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-w.svg" id="wpawn2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn2" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-w.svg" id="wpawn3" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn3" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-w.svg" id="wpawn4" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn4" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-w.svg" id="wpawn5" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn5" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-w.svg" id="wpawn6" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn6" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/pawn-w.svg" id="wpawn7" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn7" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/pawn-w.svg" id="wpawn8" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/pawn-w.svg" id="wpawn8" class="piece" draggable="true" ondragstart="drag(event)" alt="white pawn">
               </td>
             </tr>
 
             <tr>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/rook-w.svg" id="wrook1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/rook-w.svg" id="wrook1" class="piece" draggable="true" ondragstart="drag(event)" alt="white rook">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/knight-w.svg" id="wknight1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/knight-w.svg" id="wknight1" class="piece" draggable="true" ondragstart="drag(event)" alt="white knight">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/bishop-w.svg" id="wbishop1" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/bishop-w.svg" id="wbishop1" class="piece" draggable="true" ondragstart="drag(event)" alt="white bishop">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/queen-w.svg" id="wqueen" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/queen-w.svg" id="wqueen" class="piece" draggable="true" ondragstart="drag(event)" alt="white queen">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/king-w.svg" id="wking" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/king-w.svg" id="wking" class="piece" draggable="true" ondragstart="drag(event)" alt="white knight">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/bishop-w.svg" id="wbishop2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/bishop-w.svg" id="wbishop2" class="piece" draggable="true" ondragstart="drag(event)" alt="white bishop">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square dark-square">
-              <img src="img/knight-w.svg" id="wknight2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/knight-w.svg" id="wknight2" class="piece" draggable="true" ondragstart="drag(event)" alt="white queen">
               </td>
               <td ondrop="drop(event)" ondragover="allowDrop(event)" class="square light-square">
-              <img src="img/rook-w.svg" id="wrook2" class="piece" draggable="true" ondragstart="drag(event)"/>
+                <img src="img/rook-w.svg" id="wrook2" class="piece" draggable="true" ondragstart="drag(event)" alt="white rook">
               </td>
             </tr>
             </table>
@@ -204,7 +203,7 @@
         <div class="info-container">
           <h1 class="p-4 game-info text-black rounded">Bot Difficulty: <span class="badge text-bg-secondary">10</span></h1>
           <h1 class="p-4 game-info text-black rounded">Move : <span class="badge text-bg-secondary">0</span></h1>
-          <h1 class="p-4 game-info text-black rounded"> <img src="img/profilepic.jpg" class="rounded-4 image-fluid pfp"> </img> Magnus21 <span class="badge text-bg-secondary">250 🏆</span></h1>
+          <h1 class="p-4 game-info text-black rounded"> <img src="img/profilepic.jpg" class="rounded-4 image-fluid pfp" alt="test profile picture"> Magnus21 <span class="badge text-bg-secondary">250 🏆</span></h1>
         </div>
       </div>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
