@@ -95,7 +95,7 @@ public function refreshGame() {
   }
 
 public function play(){
-  if (isset($_SESSION["game"])){
+  if (isset($_SESSION["game"]) && $_SESSION["game"] != null){
     return $this -> refreshGame();
   }
   
