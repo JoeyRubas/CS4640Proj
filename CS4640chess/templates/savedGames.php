@@ -32,6 +32,7 @@
             <th scope="col">Difficulty</th>
             <th scope="col">Timestamp</th>
             <th scope="col">Load Game</th>
+            <th scope="col">Delete Game</th>
 
           </tr>
         </thead>
@@ -44,6 +45,12 @@
                 <form method="post" action="?command=loadGame">
                   <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
                   <button type="submit" class="btn btn-primary">Load Game</button>
+                </form>
+              </td>
+              <td>
+              <form method="post" action="?command=deleteGame">
+                  <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
+                  <button type="submit" class="btn btn-danger">Delete Game</button>
                 </form>
               </td>
             </tr>

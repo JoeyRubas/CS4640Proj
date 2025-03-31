@@ -71,12 +71,15 @@ class ChessController {
       case "endgame": 
         $this -> processEnd();
         break;
+      case "deleteGame":
+        $this -> deleteGame();
       case "welcome":
       default:
         $this->showWelcome($message);
         break;
     }
   }
+
 
 public function refreshGame() {
     $user_id = $_SESSION["user_id"];
@@ -190,6 +193,7 @@ public function login() {
       
       $message = "<p class='alert alert-success'> New account created!</p>";
       $this -> showWelcome($message);
+      header("Location: ?command=welcome");
       return;
       
     } 
@@ -203,19 +207,20 @@ public function login() {
         $_SESSION["name"] = $_POST["username"];
         $_SESSION["email"] = $_POST["email"];
         $message = "<p class='alert alert-success'>Login successful!</p>";
+        header("Location: ?command=welcome");
         $this->showWelcome($message);
         return;    
         } else {
        $message = "<p class='alert alert-danger'>Incorrect password!</p>"; 
        $this->showLogin($message);
        return;
+        }
       }
-      
     }
     $message = "<p class='alert alter-danger'> Missing password, name or email";
     $this->showLogin($message);
     return;
-  }
+  
 
 }
 
@@ -232,15 +237,23 @@ public function savedGames(){
 public function loadGame(){
   $results = $this -> db -> query ("SELECT * from chess_games WHERE id=$1", $_POST["game_id"]);
   if (!isset($results)){
-    return savedGames();
+    return $this -> savedGames();
   }
   $game = $results[0];
   $fen = $game["pgn"];
   $_SESSION["fen"] = $fen;
   $_SESSION["game"] = new Chess($fen);
   $_SESSION["loaded_id"] = $_POST["game_id"];
+  header("Location: ?command=play");
   return $this -> refreshGame();
 }
+
+public function deleteGame() {
+  $this->db->query("DELETE FROM chess_games WHERE id = $1 AND user_id = $2", $_POST["game_id"], $_SESSION["user_id"]);
+  header("Location: ?command=savedGames");
+  return $this->savedGames();
+}
+
   
   public function showWelcome($message="") {
     include("CS4640chess/templates/welcome.php");
@@ -275,7 +288,7 @@ public function loadGame(){
     $_SESSION["loaded_id"] = null;
     $_SESSION["game"] = null;
     $_SESSION["fen"] = null;
-    
+    header("Location: ?command=welcome");
     return $this->showWelcome();
   }
 
