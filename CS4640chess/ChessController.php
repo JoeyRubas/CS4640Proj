@@ -163,23 +163,32 @@ public function makeOpponentMove(){
 }
 
 public function login() {
-  if (isset($_POST["fullname"]) && isset($_POST["email"]) &&
+
+  if (isset($_POST["username"]) && isset($_POST["email"]) &&
     isset($_POST["password"]) && !empty($_POST["password"]) &&
-    !empty($_POST["fullname"]) && !empty($_POST["email"])) {
+    !empty($_POST["username"]) && !empty($_POST["email"])) {
+      $username = $_POST["username"];
+      if (!preg_match('/chess/i', $username)) {
+        $message = "<p class='alert alter-danger'> Username must contain the word chess!";
+        $this->showLogin($message);
+        return;
+      }
+    
 
     $results = $this->db->query("select * from chess_users where email = $1;", $_POST["email"]);
    
     if (empty($results)) {
+
       $this->db->query("insert into chess_users (name, email, password) values ($1, $2, $3);",
-        $_POST["fullname"], $_POST["email"], 
+        $_POST["username"], $_POST["email"], 
         password_hash($_POST["password"], PASSWORD_DEFAULT));
       $results = $this->db->query("select * from chess_users where email = $1;", $_POST["email"]);
       $user_id = $results[0]["id"];
       $_SESSION["user_id"] = $user_id;
-      $_SESSION["name"] = $_POST["fullname"];
+      $_SESSION["name"] = $_POST["username"];
       $_SESSION["email"] = $_POST["email"];
       
-      $message = "<p class='sucess alert-success'> New account created!</p>";
+      $message = "<p class='alert alert-success'> New account created!</p>";
       $this -> showWelcome($message);
       return;
       
@@ -191,7 +200,7 @@ public function login() {
       $hashed_password = $results[0]["password"];
       $correct = password_verify($_POST["password"], $hashed_password);
       if ($correct) {
-        $_SESSION["name"] = $_POST["fullname"];
+        $_SESSION["name"] = $_POST["username"];
         $_SESSION["email"] = $_POST["email"];
         $message = "<p class='alert alert-success'>Login successful!</p>";
         $this->showWelcome($message);
