@@ -24,63 +24,37 @@
   </head>
   <body>
     <div class="background">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-          <a class="navbar-brand" href="index.html">CS 4640 Chess</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Leaderboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="mygames.html">My Games</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <?php include 'nav.php'; ?>
 
       <div class="container mt-5">
         <h1 class="welcome p-4 text-black rounded">
           Welcome back to CS 4640 Chess!
         </h1>
-
         <div class="mt-4 rounded-4">
           <img
             src="img/backgroundchess.webp"
             class="img-fluid rounded-4 image-background"
-            alt="A blurry chess board"
+            alt="A chess board"
           >
+          <?=$message?>
           <div class="play-bar rounded-4 btn-group">
+            <form action="?command=play" method="post">
             <button
-              type="button"
-              onclick="window.location.href = 'play.html'"
-              class="btn btn-success fs-1 play-btn"
-            >
+              type="submit"
+               class="btn btn-success fs-1 play-btn">
               Play
             </button>
+
             <div class="btn btn-danger play-btn fs-1">
               Difficulty:
-              <select class="btn btn-light fs-3" title="difficulty selection">
+                <select name="difficulty" class="btn btn-light fs-3" title="difficulty selection">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
-                <option value="1">4</option>
-                <option value="2">5</option>
-                <option value="3">6</option>
-              </select>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                </select>
             </div>
           </div>
         </div>
