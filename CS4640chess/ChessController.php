@@ -101,8 +101,7 @@ public function play(){
   if (isset($_SESSION["game"]) && $_SESSION["game"] != null){
     return $this -> refreshGame();
   }
-  
-  
+
   if (isset($_POST["difficulty"])){
         $_SESSION["difficulty"] = $_POST["difficulty"];
         $game = new Chess();
@@ -256,7 +255,11 @@ public function deleteGame() {
 
   
   public function showWelcome($message="") {
-    include("CS4640chess/templates/welcome.php");
+      if (isset($_POST["theme"])) {
+          setcookie("theme", $_POST["theme"], time() + (86400 * 30), "/");
+          $_SESSION["theme"] = $_POST["theme"];
+      }
+      include("CS4640chess/templates/welcome.php");
   }
 
     public function showLogin($message = "") {

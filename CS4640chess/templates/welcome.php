@@ -1,6 +1,6 @@
 <!-- All files written by pair programming in a study room by Joey Rubas (unn4nf) and Vincent Martinez (hhx5qj)-->
 <!-- Deployment is active at: https://cs4640.cs.virginia.edu/hhx5qj/sprint2/ -->
-
+<?php $theme = $_COOKIE["theme"] ?? "light"; ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,7 +22,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css"
   >
   </head>
-  <body>
+  <body class="<?= htmlspecialchars($theme) ?>">
     <div class="background">
       <?php include 'nav.php'; ?>
 
@@ -39,24 +39,31 @@
           <?=$message?>
           <div class="play-bar rounded-4 btn-group">
             <form action="?command=play" method="post">
-            <button
-              type="submit"
-               class="btn btn-success fs-1 play-btn">
-              Play
-            </button>
-
-            <div class="btn btn-danger play-btn fs-1">
-              Difficulty:
-                <select name="difficulty" class="btn btn-light fs-3" title="difficulty selection">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                </select>
-            </div>
+                <button
+                        type="submit"
+                        class="btn btn-success fs-1 play-btn">
+                    Play
+                </button>
+                <div class="btn btn-danger play-btn fs-1">
+                    Difficulty:
+                    <select name="difficulty" class="btn btn-light fs-3" title="difficulty selection">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+            </form>
           </div>
+            <form action="?command=welcome" method="post">
+                <input type="hidden" name="theme" value="dark">
+                <button
+                        type="submit"
+                        class="btn btn-success fs-1 play-btn">
+                    Dark Mode
+                </button>
         </div>
       </div>
 

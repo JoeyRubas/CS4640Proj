@@ -4,6 +4,16 @@ body {
     padding: 0;
 }
 
+body.light {
+    background-color: white;
+    color: black;
+}
+
+body.dark {
+    background-color: #121212;
+    color: white;
+}
+
 .background {
     background-color: lightgray;
     min-width: 100vw;
