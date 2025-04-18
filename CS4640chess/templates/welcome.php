@@ -29,7 +29,9 @@
       <div class="container mt-5">
         <h1 class="welcome p-4 text-black rounded">
           Welcome back to CS 4640 Chess!
+            <div id="tip-container" style="margin-top: 10px; font-style: italic; font-size: medium;"></div>
         </h1>
+
         <div class="mt-4 rounded-4">
           <img
             src="img/backgroundchess.webp"
@@ -69,5 +71,26 @@
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     </div>
+    <script>
+        const tips = [
+            { msg: "Always do En Passant", author: "Magnus Carlsen" },
+            { msg: "Place a mirror behind your opponent so that you can get a sneak peek at their board for a tactical advantage", author: "Vincent" },
+            { msg: "Do not play the London", author: "JoeyChess" }
+        ];
+
+        const randomTip = () => tips[Math.floor(Math.random() * tips.length)];
+        const tip = randomTip();
+
+        document.getElementById("tip-container").textContent = `"${tip.msg}" — ${tip.author}`;
+
+        (function () {
+            const tipEl = document.getElementById("tip-container");
+            tipEl.style.opacity = 0;
+            setTimeout(() => {
+                tipEl.style.transition = "opacity 1s";
+                tipEl.style.opacity = 1;
+            }, 100);
+        })();
+    </script>
   </body>
 </html>

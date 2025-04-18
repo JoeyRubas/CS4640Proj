@@ -35,6 +35,10 @@ function drop(ev) {
       if (data.success) {
 
         const playerTargetSquare = document.getElementById(endSquareId);
+        const existingPiece = playerTargetSquare.querySelector(".piece");
+        if (existingPiece) {
+          existingPiece.remove();
+        }
         playerTargetSquare.appendChild(draggedPiece);
 
         const oppFrom = document.getElementById(data.from);
