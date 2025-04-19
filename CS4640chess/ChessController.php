@@ -68,9 +68,12 @@ class ChessController {
       case "playMove":
         $this -> makeMove();
         break;
-      case "endgame": 
+      case "endgame": {
         $this -> processEnd();
-        break;
+        break;}
+        case "gameoverpopup":{
+        $this -> showGameOver();
+        break;}
       case "deleteGame":
         $this -> deleteGame();
       case "welcome":
@@ -262,38 +265,45 @@ public function deleteGame() {
       include("CS4640chess/templates/welcome.php");
   }
 
+  public function showGameOver() {
+      include("CS4640chess/templates/GameOver.php");
+  }
     public function showLogin($message = "") {
     include("CS4640chess/templates/login.php");
   }
 
-  public function processEnd(){
-    $game = $_SESSION["game"];
-    $fen = $game->fen();
+    public function processEnd(){
 
+        $game = $_SESSION["game"];
+        $fen = $game->fen();
+        $user_id = $_SESSION["user_id"];
+        $difficulty = $_SESSION["difficulty"];
+        $points = 100;
+        if ($_SESSION["loaded_id"] === null) {
+            $this->db->query(
+                "INSERT INTO chess_games (bot_difficulty, pgn, points, user_id, modified_at) VALUES ($1, $2, $3, $4, NOW());",
+                $difficulty, $fen, $points, $user_id
+            );
+        } else {
+            $this->db->query(
+                "UPDATE chess_games SET bot_difficulty = $1, pgn = $2, points = $3, modified_at = NOW() WHERE id = $4;",
+                $difficulty, $fen, $points, $_SESSION["loaded_id"]
+            );
+        }
+        $_SESSION["game_summary"] = [
+            "fen" => $fen,
+            "difficulty" => $difficulty,
+            "points" => $points
+        ];
+        $_SESSION["loaded_id"] = null;
+        $_SESSION["game"] = null;
 
+        $_SESSION["fen"] = null;
+        header('Content-Type: application/json');
+        echo json_encode(["status" => "ok"]);
 
-    $user_id = $_SESSION["user_id"];
-    $difficulty = $_SESSION["difficulty"];
-    $points = 0; 
-  if ($_SESSION["loaded_id"] === null) {
-    $this->db->query(
-    "INSERT INTO chess_games (bot_difficulty, pgn, points, user_id, modified_at) VALUES ($1, $2, $3, $4, NOW());",
-    $difficulty, $fen, $points, $user_id
-    );
-  }
-  else {
-    $this->db->query(
-    "UPDATE chess_games SET bot_difficulty = $1, pgn = $2, points = $3, modified_at = NOW() WHERE id = $4;",
-    $difficulty, $fen, $points, $_SESSION["loaded_id"]
-    );
-  }
-
-    $_SESSION["loaded_id"] = null;
-    $_SESSION["game"] = null;
-    $_SESSION["fen"] = null;
-    header("Location: ?command=welcome");
-    return $this->showWelcome();
-  }
+        exit();
+    }
 
 }
  
