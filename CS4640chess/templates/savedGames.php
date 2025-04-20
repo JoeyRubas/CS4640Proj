@@ -78,16 +78,7 @@
       
 
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script>
-            $('.game-summary').on('click', function () {
-                const index = $(this).data('index');
-                const detailsRow = $('#details-' + index);
-                const icon = $(this).find('.toggle-icon');
-
-                detailsRow.slideToggle(200);
-                icon.toggleClass('rotated');
-            });
-        </script>
+        <script src="CS4640Chess/js/gameSummary.js"> </script>
     </div>
   </body>
 </html>
