@@ -137,28 +137,56 @@ public function squareToNum($square){
 
 
 public function makeMove(){
+  $extra_data = [];
   $game = $_SESSION["game"];
-  $from = $this -> numToSquare(64-$_POST["from"]);
-  $to = $this -> numToSquare(64-$_POST["to"]);
-  $res = $game ->move(["from" => $from, "to" => $to, "promotion" => false]);
+
+  $from = $this->numToSquare(64 - $_POST["from"]);
+  $to = $this->numToSquare(64 - $_POST["to"]);
+
+  $isPromotion = false;
+  $from_rank = intval(substr($from, 1, 1));
+  $to_rank = intval(substr($to, 1, 1));
+  $piece = $game->get($from);
+
+
+  $extra_data["to_rank"] = $to_rank;
+  $extra_data["from"] = $from;
+  $extra_data["piece"] = $piece;
+
+  if ($piece == "P" && $to_rank === 8) {
+    $isPromotion = true;
+    $extra_data["promotion"] = "Q";
+  }
+
+  $res = $game->move([
+    "from" => $from,
+    "to" => $to,
+    "promotion" => $isPromotion ? 'q' : false
+  ]);
+
   if ($res == null){
     header('Content-Type: application/json');
     echo json_encode(["success" => false]);
     return;
   }
 
-  $fen = $game -> fen();
+  $fen = $game->fen();
   $_SESSION["fen"] = $fen;
 
-  $res = $this -> makeOpponentMove();
+  $res = $this->makeOpponentMove();
   $opp_from = $res["from"];
   $opp_to = $res["to"];
+
   header('Content-Type: application/json');
-    echo json_encode(["success" => true,
-                      "from" => $this -> squareToNum($opp_from),
-                      "to" => $this -> squareToNum($opp_to)]);
-     return;
+  echo json_encode([
+    "success" => true,
+    "from" => $this->squareToNum($opp_from),
+    "to" => $this->squareToNum($opp_to),
+    "is_promotion" => $isPromotion
+  ]);
+  return;
 }
+
 
 public function makeOpponentMove(){
   $game = $_SESSION["game"];
