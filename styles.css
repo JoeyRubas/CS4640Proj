@@ -14,11 +14,7 @@ body.dark {
     color: white;
 }
 
-.background {
-    background-color: lightgray;
-    min-width: 100vw;
-    min-height: 100vh;
-}
+
 .highlight-player-move {
     background-color: rgba(255, 255, 0, 0.6) !important;
 }
@@ -27,30 +23,25 @@ body.dark {
     background-color: rgba(255, 0, 0, 0.3) !important;
 }
 
+.background {
+    background-color: lightgray;
+    min-width: 100vw;
+    min-height: 100vh;
+}
 .image-background {
-    height: 70vh;
-    object-fit: fill;
-    filter: blur(3px);
-    z-index: 1;
-    margin: 20px; 
-    position: relative;
-    border-radius: 20px; 
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    transform: translate(5%, -15vh); 
-    overflow: hidden;
+
     
 }
 
 
-
 .welcome {
-    width: 30%;
-    z-index: 2;
-    position: relative;
-    background-color : rgb(206, 206, 206);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    border : rgb(46, 46, 46) 5px solid;
+
 }
+
+.play-bar {
+
+}
+
 
 .info-container {
     width: 30%;
@@ -78,21 +69,7 @@ body.dark {
   gap: 5px;
 }
 
-.play-bar {
-    width : 45%;
-    height : 20vh;
-    z-index: 3;
-    position: relative;
-    bottom: 65vh;
-    left: 45vw;
-    display: flex; 
-    align-items: center; 
-    padding-left: 20px;
-    padding-right: 20px; 
-    background-color : rgb(206, 206, 206);
-    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
-    border : rgb(46, 46, 46) 5px solid;
-}
+
 
 .pfp {
     width: 3vw;

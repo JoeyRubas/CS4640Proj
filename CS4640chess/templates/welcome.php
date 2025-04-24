@@ -23,54 +23,39 @@
   >
   </head>
   <body class="<?= htmlspecialchars($theme) ?>">
-    <div class="background">
       <?php include 'nav.php'; ?>
-
-      <div class="container mt-5">
-        <h1 class="welcome p-4 text-black rounded">
-          Welcome back to CS 4640 Chess!
-            <div id="tip-container" style="margin-top: 10px; font-style: italic; font-size: medium;"></div>
+      <?= $message ?>
+      <div id="holder">
+        <h1 class="welcome">
+          Welcome to Lonely Chess!
+          <div id="tip-container" style="margin-top: 10px; font-style: italic; font-size: medium;"></div>
         </h1>
-
-        <div class="mt-4 rounded-4">
-          <img
+        <img
             src="img/backgroundchess.webp"
-            class="img-fluid rounded-4 image-background"
+            class="image-background"
             alt="A chess board"
-          >
-          <?= $message ?>
-          <div class="play-bar rounded-4 btn-group">
+        >
+        
+        <div class="play-bar">
             <form action="?command=play" method="post">
-                <button
-                        type="submit"
-                        class="btn btn-success fs-1 play-btn">
-                    Play
-                </button>
-                <div class="btn btn-danger play-btn fs-1">
-                    Difficulty:
-                    <select name="difficulty" class="btn btn-light fs-3" title="difficulty selection">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
+              <button type="submit" class="play-btn">
+                Play
+              </button>
+              <div class="play-btn">
+                Difficulty:
+                <select name="difficulty" title="difficulty selection">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                </select>
+              </div>
             </form>
-          </div>
-            <form action="?command=welcome" method="post">
-                <input type="hidden" name="theme" value="dark">
-                <button
-                        type="submit"
-                        class="btn btn-success fs-1 play-btn">
-                    Dark Mode
-                </button>
         </div>
       </div>
-        </div>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script src="CS4640chess/js/tips.js"></script>
   </body>
 </html>
