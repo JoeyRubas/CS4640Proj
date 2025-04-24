@@ -1,6 +1,7 @@
-<?php 
+<?php
 
-function drawSquare($id, $row, $img, $review){
+function drawSquare($id, $row, $img, $review)
+{
     $img_names = array(
         "r" => "rook-b",
         "n" => "knight-b",
@@ -16,50 +17,52 @@ function drawSquare($id, $row, $img, $review){
         "P" => "pawn-w"
     );
 
-    if (($id + $row) % 2 == 0){
+    if (($id + $row) % 2 == 0) {
         $color = "light-square";
-    }
-    else{
+    } else {
         $color = "dark-square";
     }
     $ondrop_action = "";
     $drop_action = "";
 
-    if (!$review)
-        {
-            $ondrop_action = "ondrop='drop(event)' ondragover='allowDrop(event)'";
-            $drop_action = "draggable='true' ondragstart='drag(event)'";
-        }
+    if (!$review) {
+        $ondrop_action = "ondrop='drop(event)' ondragover='allowDrop(event)'";
+        $drop_action = "draggable='true' ondragstart='drag(event)'";
+    }
     echo "<td id = $id $ondrop_action class='square $color'>";
-    if ($img != "None"){
-      echo "<img src='img/$img_names[$img].svg' id='piece-$id' $drop_action class='piece'/>";
+    if ($img != "None") {
+        echo "<img src='img/$img_names[$img].svg' id='piece-$id' $drop_action class='piece'/>";
 
     }
     echo "</td>";
-
 }
 
+echo "<tr><td></td>";
+for ($i = 0; $i < 8; $i++) {
+    $letter = chr(97 + $i);
+    echo "<td style='text-align: center;'>$letter</td>";
+}
 
 $rows = explode("/", $fen);
 $id = 0;
 $row_num = 0;
-foreach ($rows as $row){
-    echo "<tr>";
-        foreach (str_split($row) as $piece){
-            if (is_numeric($piece)){
-                for ($i = 0; $i < $piece; $i++){
-                  drawSquare($id, $row_num, "None", $review); 
-                  $id++; 
-                }
-            }
-            else{
-                if ($piece == " "){
-                    break;
-                }
-                drawSquare($id, $row_num, $piece, $review);
+foreach ($rows as $row) {
+    $label = 8 - $row_num;
+    echo "<tr><td> $label </td>";
+    foreach (str_split($row) as $piece) {
+        if (is_numeric($piece)) {
+            for ($i = 0; $i < $piece; $i++) {
+                drawSquare($id, $row_num, "None", $review);
                 $id++;
-                }
+            }
+        } else {
+            if ($piece == " ") {
+                break;
+            }
+            drawSquare($id, $row_num, $piece, $review);
+            $id++;
         }
-        echo "</tr>";
-        $row_num++;
-    }?>
+    }
+    echo "</tr>";
+    $row_num++;
+} ?>

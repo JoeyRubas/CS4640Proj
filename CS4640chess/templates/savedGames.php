@@ -27,17 +27,16 @@
     <div class="background">
     <?php include 'nav.php'; ?>
     <?php
-    function who_won($points) {
-      if($points > 0) {
-          return "You";
-      }
-      elseif($points < 0) {
-          return "Bot";
-      }
-      else {
-          return "Tie";
-      }
-  }?>
+    function who_won($points)
+    {
+        if ($points > 0) {
+            return "You";
+        } elseif ($points < 0) {
+            return "Bot";
+        } else {
+            return "Tie";
+        }
+    } ?>
       <table class="table table-hover primary-table rounded-4 fs-4 historytable">
         <thead>
           <tr>
@@ -49,29 +48,29 @@
         </thead>
           <tbody>
           <?php foreach ($games as $index => $game): ?>
-              <tr class="game-summary" style="cursor: pointer;" data-index="<?php echo $index; ?>">
-                  <td><?php echo $game['id']; ?></td>
-                  <td><?php echo who_won($game['points']); ?></td>
-                  <td colspan="2">
-                      <i class="fas fa-chevron-down toggle-icon" style="transition: transform 0.3s;"></i>
-                  </td>
-              </tr>
-              <tr class="game-details" id="details-<?php echo $index; ?>" style="display: none;">
-                  <td colspan="4">
-                      <div class="p-3 border rounded bg-light">
-                          <strong>Difficulty:</strong> <?php echo $game['bot_difficulty']; ?><br>
-                          <strong>Timestamp:</strong> <?php echo $game['modified_at']; ?><br>
-                          <form method="post" action="?command=loadGame" class="d-inline">
-                              <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
-                              <button type="submit" class="btn btn-primary btn-sm mt-2">Load Game</button>
-                          </form>
-                          <form method="post" action="?command=deleteGame" class="d-inline">
-                              <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
-                              <button type="submit" class="btn btn-danger btn-sm mt-2">Delete Game</button>
-                          </form>
-                      </div>
-                  </td>
-              </tr>
+                  <tr class="game-summary" style="cursor: pointer;" data-index="<?php echo $index; ?>">
+                      <td><?php echo $game['id']; ?></td>
+                      <td><?php echo who_won($game['points']); ?></td>
+                      <td colspan="2">
+                          <i class="fas fa-chevron-down toggle-icon" style="transition: transform 0.3s;"></i>
+                      </td>
+                  </tr>
+                  <tr class="game-details" id="details-<?php echo $index; ?>" style="display: none;">
+                      <td colspan="4">
+                          <div class="p-3 border rounded bg-light">
+                              <strong>Difficulty:</strong> <?php echo $game['bot_difficulty']; ?><br>
+                              <strong>Timestamp:</strong> <?php echo $game['modified_at']; ?><br>
+                              <form method="post" action="?command=loadGame" class="d-inline">
+                                  <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
+                                  <button type="submit" class="btn btn-primary btn-sm mt-2">Review Game</button>
+                              </form>
+                              <form method="post" action="?command=deleteGame" class="d-inline">
+                                  <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
+                                  <button type="submit" class="btn btn-danger btn-sm mt-2">Delete Game</button>
+                              </form>
+                          </div>
+                      </td>
+                  </tr>
           <?php endforeach; ?>
           </tbody>
       </table>

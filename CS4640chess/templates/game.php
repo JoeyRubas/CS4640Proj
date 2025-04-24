@@ -34,9 +34,19 @@
             <div id="game-status" style="display: none;"><?php echo $result; ?></div>
           </div>
         <div class="info-container">
-          <h1 class="p-4 game-info text-black rounded">Bot Difficulty: <span class="badge text-bg-secondary"><?php echo $difficulty;?></span></h1>
-          <h1 class="p-4 game-info text-black rounded"> <img src="img/profilepic.jpg" class="rounded-4 image-fluid pfp" alt="test profile picture"> <?php echo $name;?> <span class="badge text-bg-secondary">250 🏆</span></h1>
-          <a href="?command=endgame" class="btn btn-danger">End Game</a>
+          <h1 class="p-4 game-info text-black rounded">Bot Difficulty: 
+            <span class="badge text-bg-secondary">
+              <?php echo $_SESSION["difficulty"]; ?>
+            </span>
+          </h1>
+          <h1 class="p-4 game-info text-black rounded"> 
+            <img src="img/profilepic.jpg" class="rounded-4 image-fluid pfp" alt="test profile picture"> 
+            <?php echo $_SESSION["name"]; ?> 
+            <span class="badge text-bg-secondary">
+              <?php echo $_SESSION["points"]; ?> 🏆
+            </span>
+            </h1>
+          <a href="?command=endgame" class="btn btn-danger">Resign</a>
           
         </div>
       </div>

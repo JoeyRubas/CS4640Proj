@@ -18,7 +18,7 @@
           <h1>Welcome to CS4640 Chess! Please login or create your account to continue</h1>
         </div>
       </div>
-      <?=$message?>
+      <?= $message ?>
       <div class="row">
         <div class="col-xs-12">
           <form action="?command=login" method="post" id="loginForm">

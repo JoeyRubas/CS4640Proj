@@ -6,7 +6,8 @@
  */
 
 
-class Database {
+class Database
+{
     private $dbConnector;
 
     /**
@@ -14,7 +15,8 @@ class Database {
      *
      * Connects to PostgresSQL
      */
-    public function __construct() {
+    public function __construct()
+    {
         $host = Config::$db["host"];
         $user = Config::$db["user"];
         $database = Config::$db["database"];
@@ -31,7 +33,8 @@ class Database {
      * The query must include placeholders for each of the additional
      * parameters provided.
      */
-    public function query($query, ...$params) {
+    public function query($query, ...$params)
+    {
         $res = pg_query_params($this->dbConnector, $query, $params);
 
         if ($res === false) {

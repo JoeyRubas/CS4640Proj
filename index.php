@@ -12,7 +12,8 @@ spl_autoload_register(function ($classname) {
     }
 });
 
-function checkDatabaseSetup() {
+function checkDatabaseSetup()
+{
     $host = "db";
     $port = "5432";
     $database = "example";
@@ -38,7 +39,8 @@ function checkDatabaseSetup() {
     return $tablesExist;
 }
 
-function initializeDatabase() {
+function initializeDatabase()
+{
     include 'databaseinit.php';
 }
 

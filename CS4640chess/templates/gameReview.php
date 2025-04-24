@@ -13,14 +13,10 @@
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-  >
+      rel="stylesheet">
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css"
-  >
-  <script src="CS4640chess/js/endGame.js"></script>
-    <script src="CS4640chess/js/chess.js"></script>
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/fontawesome.min.css">
     
   </head>
   <body>
@@ -34,11 +30,10 @@
             <div id="game-status" style="display: none;"><?php echo $result; ?></div>
           </div>
         <div class="info-container">
-          <h1 class="p-4 game-info text-black rounded">Bot Difficulty: <span class="badge text-bg-secondary"><?php echo $difficulty;?></span></h1>
-          <h1 class="p-4 game-info text-black rounded"> Move Number: <span class="badge text-bg-secondary"><?php echo $move_number;?></span></h1>
-          <h1 class="p-4 game-info text-black rounded">Evaluation: <span class="badge text-bg-secondary"><?php echo $evaluation;?></span></h1>
-          <h1 class="p-4 game-info text-black rounded">Best Move: <span class="badge text-bg-secondary"><?php echo $best_move;?></span></h1>
-          <h1 class="p-4 game-info text-black rounded">FEN: <span class="badge text-bg-secondary"><?php echo $fen;?></span></h1>
+          <h1 class="p-4 game-info text-black rounded">Bot Difficulty: <span class="badge text-bg-secondary"><?php echo $difficulty; ?></span></h1>
+          <h1 class="p-4 game-info text-black rounded"> Move Number: <span class="badge text-bg-secondary"><?php echo $move_number; ?></span></h1>
+          <h1 class="p-4 game-info text-black rounded">Evaluation: <span class="badge text-bg-secondary"><?php echo $evaluation; ?></span></h1>
+          <h1 class="p-4 game-info text-black rounded">Best Move: <span class="badge text-bg-secondary"><?php echo $best_move; ?></span></h1>
           <form action="?command=review" method="post" style="display: inline;">
               <input type="hidden" name="move" value="<?php echo $move_number - 1; ?>">
               <button type="submit" class="btn btn-danger" <?php echo ($move_number == 0) ? 'disabled' : ''; ?>>Previous Move</button>

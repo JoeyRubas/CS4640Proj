@@ -38,7 +38,7 @@
             class="img-fluid rounded-4 image-background"
             alt="A chess board"
           >
-          <?=$message?>
+          <?= $message ?>
           <div class="play-bar rounded-4 btn-group">
             <form action="?command=play" method="post">
                 <button
