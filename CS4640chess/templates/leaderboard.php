@@ -37,7 +37,7 @@
             return "Tie";
         }
     } ?>
-      <table class="table table-hover primary-table rounded-4 fs-4 historytable">
+      <table id="savedgamestable" class="table table-hover primary-table rounded-4 fs-4 historytable">
         <thead>
           <tr>
             <th scope="col">Username</th>
@@ -53,7 +53,7 @@
                       <td><?php echo $user['points']; ?></td>
                       <td><form method="post" action="?command=loadGame" class="d-inline">
                         <input type="hidden" name="game_id" value="<?php echo $user['game_id']; ?>">
-                        <button type="submit" class="btn btn-primary btn-sm mt-2">Review Game</button>
+                        <button type="submit" id="reviewgame" class="btn btn-primary btn-sm mt-2">Review Game</button>
                       </form></td>
           <?php endforeach; ?>
           </tbody>

@@ -24,7 +24,7 @@
   </head>
 
   <body>
-    <div class="background">
+    <div>
     <?php include 'nav.php'; ?>
     <?php
     function who_won($points)
@@ -37,7 +37,7 @@
             return "Tie";
         }
     } ?>
-      <table class="table table-hover primary-table rounded-4 fs-4 historytable">
+      <table id="savedgamestable" class="table table-hover primary-table rounded-4 fs-4 historytable">
         <thead>
           <tr>
             <th scope="col">Game ID</th>
@@ -57,16 +57,16 @@
                   </tr>
                   <tr class="game-details" id="details-<?php echo $index; ?>" style="display: none;">
                       <td colspan="4">
-                          <div class="p-3 border rounded bg-light">
+                          <div class="p-3 border rounded gamesum">
                               <strong>Difficulty:</strong> <?php echo $game['bot_difficulty']; ?><br>
                               <strong>Timestamp:</strong> <?php echo $game['modified_at']; ?><br>
                               <form method="post" action="?command=loadGame" class="d-inline">
                                   <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
-                                  <button type="submit" class="btn btn-primary btn-sm mt-2">Review Game</button>
+                                  <button type="submit" id="reviewgame" class="btn btn-primary btn-sm mt-2">Review Game</button>
                               </form>
                               <form method="post" action="?command=deleteGame" class="d-inline">
                                   <input type="hidden" name="game_id" value="<?php echo $game['id']; ?>">
-                                  <button type="submit" class="btn btn-danger btn-sm mt-2">Delete Game</button>
+                                  <button type="submit" id="deletegame" class="btn btn-danger btn-sm mt-2">Delete Game</button>
                               </form>
                           </div>
                       </td>

@@ -2,10 +2,17 @@
 body {
     margin: 0;
     padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e7e6df!important; 
+    color: #333;
+}
+
+html {
+    background-color: #e7e6df;
 }
 
 body.light {
-    background-color: white;
+    background-color: #eeede8;
     color: black;
 }
 
@@ -14,7 +21,15 @@ body.dark {
     color: white;
 }
 
-
+.gamesum {
+    background-color: #e7e6df!important; 
+}
+#savedgamestable th, #savedgamestable td{
+    background-color: #979690;
+    border-style: solid;
+    border-width: 2px;
+    border-color:#121212;
+}
 .highlight-player-move {
     background-color: rgba(255, 255, 0, 0.6) !important;
 }
@@ -23,26 +38,89 @@ body.dark {
     background-color: rgba(255, 0, 0, 0.3) !important;
 }
 
-.background {
-    background-color: lightgray;
-    min-width: 100vw;
-    min-height: 100vh;
+#reviewgame {
+    background-color: #7b9e70;
+}
+
+#deletegame {
+    background-color: #979690;
+}
+#holder {
+    display: flex;
+    flex-direction: column;
+    max-height: 100vh;
+    min-height: 80vh;
+    background-color: #e7e6df;
+}
+
+#top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+#top-content, #top-image {
+    margin-top: 5rem;
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#bottom {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    margin-top: 10vh;
 }
 .image-background {
-
-    
+    border-radius: 8px;
+    width: 70%;
+    height: auto;
+    object-fit: cover;
 }
 
 
-.welcome {
+#welcome {
+    background-color: #7b9e70;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    min-height: 30%;
+    max-width: 60%;
+}
 
+#playform {
+    display:flex;
+    flex-direction: row;
+    min-width:60%;
+    justify-content: space-between;
 }
 
 .play-bar {
-
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 8px;
+    min-width: 40vw;
+    justify-content: space-evenly;
 }
 
-
+#difficulty {
+    border-radius: 8px;
+    background-color: #7b9e70;
+    display:flex;
+    align-items: center;
+    justify-content: space-evenly;
+    min-width:50%;
+    font-size: 1.5rem;
+    margin-left: 5vw;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
 .info-container {
     width: 30%;
     display: flex;
@@ -56,7 +134,7 @@ body.dark {
 .game-info {
     font-size : 2.5vw;
     z-index: 2;
-    width: 100%;
+    width: auto;
     top: 5%;
     height: 10%;
     position: relative;
@@ -79,15 +157,25 @@ body.dark {
 .game {
     display: flex;
     gap: 100px;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    height: 41vw;
-     
+    justify-content: space-evenly;
+    height: 50vh;
+    background-color: #e7e6df;
+    margin-top: 4vh;
 }
 
 .play-btn {
-    width : 10vh;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width : 15vh;
     height : 10vh;
+    background-color: #b8b0a6;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 2rem;
 }
 
 .square{ 
@@ -99,8 +187,6 @@ body.dark {
     position: relative;
     width : 42vw;
     height: 41vw;
-    left : 5vw;
-    top : 5vh;
 }
 
 .piece {
@@ -127,17 +213,31 @@ body.dark {
     background-color: lightgoldenrodyellow;
 }
 
-@media screen and (max-width: 768px) { 
+@media (min-width: 768px) {
+    #top {
+        flex-direction: row;
+        align-items: stretch;
+    }
+
+    #top-content, #top-image {
+        width: 50vw;
+        max-width: 50vw;
+        height: auto;
+    }
+
+    .image-background {
+        height: 100%;
+    }
+
     .welcome {
-        width: 60%; 
+        font-size: 2rem;
+    }
+    .game {
+        flex-direction: row;
+        height: 41vw;
     }
 }
 
-@media screen and (max-width: 480px) {
-    .welcome {
-        width: 80%; 
-    }
-}
 
 .historytable tr:hover td{
     color: blue;
