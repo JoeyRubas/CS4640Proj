@@ -6,14 +6,14 @@ function allowDrop(ev) {
   ev.preventDefault();
 }
 
-function getImageForPiece(pieceCode) {
-  const imgNames = {
-    "r": "rook-b", "n": "knight-b", "b": "bishop-b",
-    "q": "queen-b", "k": "king-b", "p": "pawn-b",
-    "R": "rook-w", "N": "knight-w", "B": "bishop-w",
-    "Q": "queen-w", "K": "king-w", "P": "pawn-w"
-  };
-  return `img/${imgNames[pieceCode]}.svg`;
+function makeQueen(img, endSquareId) {
+  const queenImg = document.createElement("img");
+          queenImg.src = `img/${img}.svg`
+          queenImg.id = `piece-${endSquareId}`;
+          queenImg.className = "piece";
+          queenImg.draggable = true;
+          queenImg.ondragstart = drag;
+  return queenImg;
 }
 
 
@@ -22,6 +22,12 @@ function drag(ev) {
   startSquareId = ev.target.parentNode.id;
   originalParent = ev.target.parentNode;
   ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function clearHighlights() {
+  document.querySelectorAll(".square").forEach(sq => {
+    sq.classList.remove("highlight-player-move", "highlight-opponent-move");
+  });
 }
 
 function drop(ev) {
@@ -45,56 +51,63 @@ function drop(ev) {
     .then(res => res.json())
     .then(data => {
       if (data.success) {
+        console.log("Move successful:", data);
+
+        clearHighlights();
 
         const playerTargetSquare = document.getElementById(endSquareId);
+        const playerStartSquare = document.getElementById(startSquareId);
+
+        playerStartSquare.classList.add("highlight-player-move");
+        playerTargetSquare.classList.add("highlight-player-move");
+
         const existingPiece = playerTargetSquare.querySelector(".piece");
         if (existingPiece) {
           existingPiece.remove();
+          console.log("performing capture");
         }
-        
-       
-        if ( data.is_promotion ) {
-          console.log("Promotion move detected.");
-          const queenImg = document.createElement("img");
-          queenImg.src = getImageForPiece( "Q");
-          queenImg.id = `piece-${endSquareId}`;
-          queenImg.className = "piece";
-          queenImg.draggable = true;
-          queenImg.ondragstart = drag;
+
+        if (data.is_promotion) {
+          console.log("performing promotion");
+          const queenImg = makeQueen("queen-w", endSquareId);
           playerTargetSquare.appendChild(queenImg);
           draggedPiece.remove();
         } else {
+          console.log("performing normal move");
           playerTargetSquare.appendChild(draggedPiece);
         }
 
-
-        const oppFrom = document.getElementById(data.from);
-        const oppPiece = oppFrom.querySelector(".piece");
-
-        if (oppPiece) {
+        if (data.opp_move) {
+          const oppFrom = document.getElementById(data.from);
           const oppTo = document.getElementById(data.to);
-          oppTo.innerHTML = "";
 
-          const oppEndRank = 8 - Math.floor(data.to / 8);
-          const oppIsPawn = oppPiece.src.includes("pawn");
-          if (oppEndRank === 1 && oppIsPawn) {
-            const oppQueenImg = document.createElement("img");
-            oppQueenImg.src = getImageForPiece('q');
-            oppQueenImg.id = `piece-${data.to}`;
-            oppQueenImg.className = "piece";
-            oppQueenImg.draggable = true;
-            oppQueenImg.ondragstart = drag;
-            oppTo.appendChild(oppQueenImg);
-          } else {
-            oppTo.appendChild(oppPiece);
+          oppFrom.classList.add("highlight-opponent-move");
+          oppTo.classList.add("highlight-opponent-move");
+
+          const oppPiece = oppFrom.querySelector(".piece");
+          if (oppPiece) {
+            oppTo.innerHTML = "";
+            if (data.opponent_is_promotion) {
+              const oppQueenImg = makeQueen("queen-b", data.to);
+              oppTo.appendChild(oppQueenImg);
+              oppPiece.remove();
+            } else {
+              oppTo.appendChild(oppPiece);
+            }
           }
-
         }
+
+        if (data.game_over) {
+          endGame(data.result);
+        }
+
       } else {
         originalParent.appendChild(draggedPiece);
       }
     })
     .catch(err => {
+      console.error("Error:", err);
       originalParent.appendChild(draggedPiece);
     });
 }
+

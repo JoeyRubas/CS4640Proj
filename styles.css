@@ -19,7 +19,13 @@ body.dark {
     min-width: 100vw;
     min-height: 100vh;
 }
-
+.highlight-player-move {
+    background-color: rgba(255, 255, 0, 0.6) !important;
+}
+  
+.highlight-opponent-move {
+    background-color: rgba(255, 0, 0, 0.3) !important;
+}
 
 .image-background {
     height: 70vh;

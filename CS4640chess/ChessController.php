@@ -65,6 +65,9 @@ class ChessController {
       case "loadGame":
         $this -> loadGame();
         break;
+      case "review":
+        $this -> reviewGame();
+        break;
       case "playMove":
         $this -> makeMove();
         break;
@@ -91,12 +94,28 @@ public function refreshGame() {
     $difficulty = $_SESSION["difficulty"];
     $game = $_SESSION["game"];
     $turn = $game->turn;
-    $fen = $game->fen();
-    $_SESSION["fen"] = $fen;
-    if ($turn == "b"){
-      $this -> makeOpponentMove();
+    
+    $checkmate = $game->inCheckmate();
+    $draw = $game->inDraw();
+    $result = -1;
+    if ($draw) {
+      $result = 0.5;
+    } else if ($checkmate && $turn == "w") {
+      $result = 0;
+    } else if ($checkmate && $turn == "b") {
+      $result = 1;
+    }
+    $game_over = $draw || $checkmate;
+
+    if ($turn == "b" && !$game_over){
+      $this -> makeOpponentMove(); 
+      $_SESSION["move"]++;
     }
 
+    $fen = $this->disableEnPassant($game->fen());
+    $_SESSION["fen"] = $fen;
+    $_SESSION["fen_list"][$_SESSION["move"]] = $fen;
+    $review = false;
     include("CS4640chess/templates/game.php");
   }
 
@@ -107,9 +126,11 @@ public function play(){
 
   if (isset($_POST["difficulty"])){
         $_SESSION["difficulty"] = $_POST["difficulty"];
-        $game = new Chess();
+        $game = new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1");
         $_SESSION["game"] = $game;
-        $_SESSION["fen"] = $game->fen();
+        $_SESSION["fen"] = $this->disableEnPassant($game->fen());
+        $_SESSION["move"] = 0;
+        $_SESSION["fen_list"] = array();
         $_SESSION["loaded_id"] = null;
         return $this->refreshGame();
       }
@@ -139,6 +160,13 @@ public function squareToNum($square){
 public function makeMove(){
   $extra_data = [];
   $game = $_SESSION["game"];
+
+  $game_over = false;
+  $result = -1;
+  $opp_from = -1;
+  $opp_to = -1;
+  $opp_promotion = false;
+  $make_opponent_move = true;
 
   $from = $this->numToSquare(64 - $_POST["from"]);
   $to = $this->numToSquare(64 - $_POST["to"]);
@@ -170,33 +198,117 @@ public function makeMove(){
     return;
   }
 
-  $fen = $game->fen();
+  $fen = $this->disableEnPassant($game->fen());
   $_SESSION["fen"] = $fen;
+  $_SESSION["move"]++;
+  $_SESSION["fen_list"][$_SESSION["move"]] = $fen;
 
-  $res = $this->makeOpponentMove();
-  $opp_from = $res["from"];
-  $opp_to = $res["to"];
+  $draw = $game->inDraw();
+  $checkmate = $game->inCheckmate();
+  if ($draw || $checkmate) {
+    $game_over = true;
+    $result = $draw ? .5 : 1;
+    $make_opponent_move = false;
+  }
+  
+  if ($make_opponent_move){
+    $res = $this->makeOpponentMove();
+    $opp_from = $this->squareToNum($res["from"]);
+    $opp_to = $this->squareToNum($res["to"]);
+    $draw = $game->inDraw();
+    $checkmate = $game->inCheckmate();
+    $opp_promotion = $res["promotion"] != false;
+    
+    if ($draw || $checkmate) {
+      $game_over = true;
+      $result = $draw ? .5 : 0;
+    }
+    $fen = $this->disableEnPassant($game->fen());
+    $_SESSION["fen"] = $fen;
+    $_SESSION["move"]++;
+    $_SESSION["fen_list"][$_SESSION["move"]] = $fen;
+  }
 
   header('Content-Type: application/json');
   echo json_encode([
     "success" => true,
-    "from" => $this->squareToNum($opp_from),
-    "to" => $this->squareToNum($opp_to),
-    "is_promotion" => $isPromotion
+    "from" => $opp_from,
+    "to" => $opp_to,
+    "is_promotion" => $isPromotion,
+    "opp_move" => $make_opponent_move,
+    "opponent_is_promotion" => $opp_promotion,
+    "game_over" => $game_over,
+    "result" => $result,
   ]);
   return;
 }
 
-
-public function makeOpponentMove(){
-  $game = $_SESSION["game"];
-  $legal_moves = $game->moves();
-  $game->move($legal_moves[0]->san);
-  return ["from"=>$legal_moves[0]-> from, "to"=>$legal_moves[0]->to];
+public function disableEnPassant($fen) {
+  $parts = explode(' ', $fen);
+  $parts[3] = '-';
+  return implode(' ', $parts);
 }
 
-public function login() {
+public function randMove(){
+  $game = $_SESSION["game"];
+  $moves = $game->moves();
+  $move = $moves[random_int(0, count($moves) - 1)];
+  $game->move($move->san);
+  return ["from"=>$move-> from, 
+            "to"=>$move->to,
+            "promotion" => $move->promotion];
+}
 
+public function queryChessApi($fen){
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, 'https://chess-api.com/v1');
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json',
+  ]);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['fen' => $fen]));
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+  $response = curl_exec($ch);
+  curl_close($ch);
+  return json_decode($response, true);
+}
+
+
+public function realMove() {
+  $game = $_SESSION["game"];
+  $fen = $this->disableEnPassant($game->fen());
+  
+  $response = $this->queryChessApi($fen);
+  if (!isset($response['from']) || !isset($response['to'])) {
+    throw new Exception("Invalid move response from API: " . json_encode($response));
+  }
+  $from = $response["from"];
+  $to = $response["to"];
+  $promotion = !empty($response["isPromotion"]) ? "q" : false;
+
+  $move = ["from" => $from, "to" => $to, "promotion" => $promotion];
+  if ($promotion) {
+    $move["promotion"] = $promotion;
+  }
+
+  $game->move($move);
+  return $move;
+}
+
+public function makeOpponentMove(){
+  $difficulty = $_SESSION["difficulty"];
+  $probability = 20 + 12 * $difficulty;
+  $rand = rand(1, 100);
+
+    if ($rand <= $probability) {
+      return $this->realMove();
+    } else {
+      return $this->randMove();
+    }
+  }
+
+public function login() {
   if (isset($_POST["username"]) && isset($_POST["email"]) &&
     isset($_POST["password"]) && !empty($_POST["password"]) &&
     !empty($_POST["username"]) && !empty($_POST["email"])) {
@@ -206,10 +318,8 @@ public function login() {
         $this->showLogin($message);
         return;
       }
-    
 
     $results = $this->db->query("select * from chess_users where email = $1;", $_POST["email"]);
-   
     if (empty($results)) {
 
       $this->db->query("insert into chess_users (name, email, password) values ($1, $2, $3);",
@@ -269,13 +379,34 @@ public function loadGame(){
   if (!isset($results)){
     return $this -> savedGames();
   }
-  $game = $results[0];
-  $fen = $game["pgn"];
-  $_SESSION["fen"] = $fen;
-  $_SESSION["game"] = new Chess($fen);
-  $_SESSION["loaded_id"] = $_POST["game_id"];
-  header("Location: ?command=play");
-  return $this -> refreshGame();
+
+  $results = $results[0];
+  $_SESSION["review_difficulty"] = $results["bot_difficulty"];
+  $_SESSION["review_list"] = json_decode($results['pgn'], true);
+  $_SESSION["cached_evals"] = array();
+  return $this -> reviewGame(0);
+}
+
+public function reviewGame($move_number = -1){
+  if ($move_number == -1){
+    $move_number = $_POST["move"];
+  }
+
+  $review = true;
+  $fen = $_SESSION["review_list"][$move_number];
+  $difficulty = $_SESSION["review_difficulty"];
+  
+  if (isset($_SESSION["cached_evals"][$move_number])) {
+
+    $response = $_SESSION["cached_evals"][$move_number];
+  } else {
+    $response = $this -> queryChessApi($fen);
+    $_SESSION["cached_evals"][$move_number] = $response;
+  }
+
+  $evaluation = $response["eval"];
+  $best_move = explode(":", $response["text"])[0];
+  include("CS4640chess/templates/gameReview.php");
 }
 
 public function deleteGame() {
@@ -300,22 +431,23 @@ public function deleteGame() {
     include("CS4640chess/templates/login.php");
   }
 
-    public function processEnd(){
-
+  public function processEnd(){
+        $result = $_POST["result"];
         $game = $_SESSION["game"];
-        $fen = $game->fen();
+        $fen = $this->disableEnPassant($game->fen());
+        $flattenedFenList = json_encode($_SESSION["fen_list"]);  
         $user_id = $_SESSION["user_id"];
         $difficulty = $_SESSION["difficulty"];
-        $points = 100;
+        $points = $result * $difficulty * 100;
         if ($_SESSION["loaded_id"] === null) {
             $this->db->query(
                 "INSERT INTO chess_games (bot_difficulty, pgn, points, user_id, modified_at) VALUES ($1, $2, $3, $4, NOW());",
-                $difficulty, $fen, $points, $user_id
+                $difficulty, $flattenedFenList, $points, $user_id
             );
         } else {
             $this->db->query(
                 "UPDATE chess_games SET bot_difficulty = $1, pgn = $2, points = $3, modified_at = NOW() WHERE id = $4;",
-                $difficulty, $fen, $points, $_SESSION["loaded_id"]
+                $difficulty, $flattenedFenList, $points, $_SESSION["loaded_id"]
             );
         }
         $_SESSION["game_summary"] = [
