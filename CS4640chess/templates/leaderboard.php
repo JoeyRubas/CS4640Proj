@@ -51,10 +51,10 @@
                   <tr class="game-summary" style="cursor: pointer;" data-index="<?php echo $index; ?>">
                       <td><?php echo $user['name']; ?></td>
                       <td><?php echo $user['points']; ?></td>
-                      <td><form method="post" action="?command=loadGame" class="d-inline">
+                        <td><form method="post" action="?command=loadGame" class="d-inline"></form>
                         <input type="hidden" name="game_id" value="<?php echo $user['game_id']; ?>">
-                        <button type="submit" class="btn btn-primary btn-sm mt-2">Review Game</button>
-                      </form></td>
+                        <button type="submit" class="btn btn-primary btn-sm mt-2" <?php echo ($user['game_id'] === null) ? 'disabled' : ''; ?>>Review Game</button>
+                        </form></td>
           <?php endforeach; ?>
           </tbody>
       </table>

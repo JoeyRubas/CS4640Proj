@@ -39,18 +39,23 @@ class ChessController
     public function run()
     {
         $command = "welcome";
+        $message = "";
         if (
             isset($this->input["command"]) && (
-                $this->input["command"] == "login" || isset($_SESSION["name"]))
+                $this->input["command"] == "login" || 
+                $this->input["command"] == "registerPage" ||
+                $this->input["command"] == "register" ||
+                isset($_SESSION["name"]))
         )
+        {
             $command = $this->input["command"];
-        $message = "";
-
-
-
-        if (!isset($_SESSION["user_id"]) && $command != "login") {
+        
+        }
+        else {
             $command = "loginPage";
         }
+            
+
 
         switch ($command) {
             case "logout":
@@ -61,6 +66,12 @@ class ChessController
                 return;
             case "login":
                 $this->login();
+                break;
+            case "register":
+                $this->register();
+                break;
+            case "registerPage":
+                $this->showRegister($message);
                 break;
             case "play":
                 $this->play();
@@ -327,6 +338,42 @@ class ChessController
     public function login()
     {
         if (
+            isset($_POST["username"]) &&
+            !empty($_POST["username"]) &&
+            isset($_POST["password"]) && 
+            !empty($_POST["password"])
+        ) {
+
+            $results = $this->db->query("select * from chess_users where name = $1;", $_POST["username"]);
+            if (empty($results)) {
+                $message = "<p class='alert alert-success'> Accounts with these credentials does not exist</p>";
+                $this -> showLogin($message);
+
+            } else {
+                $hashed_password = $results[0]["password"];
+                $correct = password_verify($_POST["password"], $hashed_password);
+                if ($correct) {
+                    $_SESSION["user_id"] = $results[0]["id"];
+                    $_SESSION["points"] = $results[0]["points"];
+                    $_SESSION["name"] = $_POST["username"];
+                    
+                    $message = "<p class='alert alert-success'>Login successful!</p>";
+                    $this->showWelcome($message);
+                    return;
+                } else {
+                    $message = "<p class='alert alert-danger'>Incorrect password!</p>";
+                    $this->showLogin($message);
+                    return;
+                }
+            }
+        }
+        $message = "<p class='alert alter-danger'> Missing username or password!</p>";
+        $this->showLogin($message);
+        return;
+    }
+
+    public function register(){
+        if (
             isset($_POST["username"]) && isset($_POST["email"]) &&
             isset($_POST["password"]) && !empty($_POST["password"]) &&
             !empty($_POST["username"]) && !empty($_POST["email"])
@@ -334,11 +381,11 @@ class ChessController
             $username = $_POST["username"];
             if (!preg_match('/chess/i', $username)) {
                 $message = "<p class='alert alter-danger'> Username must contain the word chess!";
-                $this->showLogin($message);
+                $this->showRegister($message);
                 return;
             }
 
-            $results = $this->db->query("select * from chess_users where email = $1;", $_POST["email"]);
+            $results = $this->db->query("select * from chess_users where name = $1;", $_POST["username"]);
             if (empty($results)) {
 
                 $this->db->query(
@@ -358,27 +405,16 @@ class ChessController
                 header("Location: ?command=welcome");
                 return;
             } else {
-                $_SESSION["user_id"] = $results[0]["id"];
-                $_SESSION["points"] = $results[0]["points"];
-                $hashed_password = $results[0]["password"];
-                $correct = password_verify($_POST["password"], $hashed_password);
-                if ($correct) {
-                    $_SESSION["name"] = $_POST["username"];
-                    $_SESSION["email"] = $_POST["email"];
-                    $message = "<p class='alert alert-success'>Login successful!</p>";
-                    $this->showWelcome($message);
-                    return;
-                } else {
-                    $message = "<p class='alert alert-danger'>Incorrect password!</p>";
-                    $this->showLogin($message);
-                    return;
-                }
+                $message = "<p class='alert alert-danger'> An account with this username already exists! Please login instead</p>";
+                $this->showLogin($message);
+                return;
             }
-        }
-        $message = "<p class='alert alter-danger'> Missing password, name or email";
+    }
+
+        $message = "<p class='alert alter-danger'> Missing username, email or password!</p>";
         $this->showLogin($message);
         return;
-    }
+}
 
 
     public function logout()
@@ -453,6 +489,11 @@ class ChessController
     public function showLogin($message = "")
     {
         include("CS4640chess/templates/login.php");
+    }
+
+    public function showRegister($message = "")
+    {
+        include("CS4640chess/templates/register.php");
     }
 
     public function processEnd()

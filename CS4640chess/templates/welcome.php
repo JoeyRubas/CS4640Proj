@@ -46,9 +46,11 @@
                         class="btn btn-success fs-1 play-btn">
                     Play
                 </button>
-                <div class="btn btn-danger play-btn fs-1">
+                <div class="btn btn-danger fs-1">
                     Difficulty:
-                    <select name="difficulty" class="btn btn-light fs-3" title="difficulty selection">
+                    <select name="difficulty" 
+                    class="btn btn-light fs-3" 
+                    title="difficulty selection">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
