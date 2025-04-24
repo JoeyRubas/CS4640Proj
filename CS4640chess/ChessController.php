@@ -346,8 +346,9 @@ class ChessController
 
             $results = $this->db->query("select * from chess_users where name = $1;", $_POST["username"]);
             if (empty($results)) {
-                $message = "<p class='alert alert-success'> Accounts with these credentials does not exist</p>";
+                $message = "<p class='alert alert-danger'> Accounts with these credentials does not exist</p>";
                 $this -> showLogin($message);
+                return;
 
             } else {
                 $hashed_password = $results[0]["password"];
@@ -419,6 +420,7 @@ class ChessController
 
     public function logout()
     {
+        $_SESSION["user_id"] = null;
         session_destroy();
     }
 

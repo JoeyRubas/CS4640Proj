@@ -16,18 +16,25 @@
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <?php if (isset($_SESSION["user_id"])) { ?>
+                <li class="nav-item">
                 <a class="nav-link" href="?command=logout">Log Out</a>
-              <?php } else { ?>
-                <a class="nav-link" href="?command=logout">Log In</a>
-                <a class="nav-link" href="?command=registerPage">Register</a>
-              <?php } ?>
-              </li>  
-            <li class="nav-item">
+              </li>
+                <li class="nav-item">
                 <a class="nav-link" href="?command=leaderboard">Leaderboard</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="?command=savedGames">My Games</a>
               </li>
+              <?php } else { ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="?command=logout">Log In</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="?command=registerPage">Register</a>
+              </li>
+              <?php } ?>
+              </li>  
+            
             </ul>
           </div>
         </div>
