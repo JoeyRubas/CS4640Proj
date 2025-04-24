@@ -462,6 +462,8 @@ class ChessController
             $_SESSION["cached_evals"][$move_number] = $response;
         }
 
+        $total_moves = count($_SESSION["review_list"]);
+
         $evaluation = $response["eval"];
         $best_move = explode(":", $response["text"])[0];
         include("CS4640chess/templates/gameReview.php");

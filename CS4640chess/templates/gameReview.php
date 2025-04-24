@@ -40,7 +40,7 @@
           </form>
           <form action="?command=review" method="post" style="display: inline;">
               <input type="hidden" name="move" value="<?php echo $move_number + 1; ?>">
-              <button type="submit" class="btn btn-success">Next Move</button>
+              <button type="submit" class="btn btn-success" <?php echo ($move_number == $total_moves-1) ? 'disabled' : ''; ?>>Next Move</button>
           </form>
           
         </div>
